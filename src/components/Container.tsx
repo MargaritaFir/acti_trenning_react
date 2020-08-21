@@ -1,44 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import UsersApi from '../common/api';
-import List from './List';
 import {URL} from '../common/constants';
-import {modifyUsers, getSelectedUser} from '../common/modifyUsers'
-
-
+import {modifyUsers, getSelectedUser} from '../common/modifyUsers';
+import AutocompliteComponent from './AutocompliteComponent';
+import UserInformation from './UserInformation'
 
 
 const Container:React.FC = () => {
-  
-    const [users, updateUsers] = useState([])
+
+    const [users, updateUsers] = useState([]);
+    const [currentUser, updateCurrentUser] = useState({ name: 'user', address: 'street mira'})
 
     useEffect(() => {
-
         const fetchData = async() => {
-        const api = new UsersApi(URL);
-        const users = await api.getUsers();
-        const modifyList = modifyUsers(users)
-        updateUsers(modifyList);
-    
-    }
+            const api = new UsersApi(URL);
+            const users = await api.getUsers();
+            const modifyList = modifyUsers(users)
+            updateUsers(modifyList);  
+        }
 
-  fetchData();
+        fetchData();
 
+    }, []);
 
-  }, []);
-
-  useEffect(() => {
-      console.log('user selected',  getSelectedUser(users, 3));
-   
-  }, [users])
-
-  console.log('this state',users)
-
-return (
-    <>
-        <div>This is Container</div>
-        <List type="This is List"/>
-    </>
-)
+    return (
+        <>
+            <div>Find user</div>
+            <AutocompliteComponent users={users} />
+            <UserInformation user={currentUser}/>
+        
+        </>
+    )
 
 }
 

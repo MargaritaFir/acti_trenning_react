@@ -1,12 +1,22 @@
-import React from 'react';
 
-interface IUserAddres{
+export interface IItem {
+    id: number,
+    name: string,
+};
+
+
+export interface  IListProps {
+    users: any
+};
+
+
+export interface IUserAddres{
     street: string,
     suite: string,
     city: string 
-}
+};
 
-interface IUserInfo {
+export interface IUserInfo {
     id: number,
     name: string,
     username: string,
@@ -15,4 +25,4 @@ interface IUserInfo {
     phone: string,
     website: string,
     company: string
-}
+};
