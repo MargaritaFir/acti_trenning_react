@@ -8,27 +8,26 @@ interface IListProps extends IList {
 } 
 
 const List = (props: any ) => {
-    const {users, getUserInfos} = props;
-    // console.log('users in list', users)
+    const {users, getUserInfos, notFound} = props;
+    console.log('users in list', users)
 
     const [usersList, updateUsersList] = useState([]);
 
-    useEffect(() => {
-        updateUsersList(users)
-    }, [])
 
     useEffect(() => {
-        updateUsersList(props.users);
+        updateUsersList(users);
 
-    }, [props.users]);
+    }, [users]);
 
-    const myList = () => usersList.map((user:any) => <ListItem key={user.id} {...user} getUserInfos={getUserInfos}/>)
+    const myList = () => usersList.map((user:any) => <ListItem key={user.id} {...user} getUserInfos={getUserInfos}/>);
+    const notFoundUsers =() => <div className="item not_found"> <span>{notFound}</span></div>;
 
-    if(usersList.length){
-        return (<div id='autoList'>{myList()}</div>)
-    } else {
-        return null
-    }
+
+    return (
+        <div className='autocomplite_list' id='autoList'>
+            {(usersList.length)? myList() : notFoundUsers() }
+        </div>
+    )
 
    
 }

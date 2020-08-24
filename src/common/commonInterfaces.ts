@@ -9,11 +9,17 @@ export interface IList{
     users:IItem[];
 };
 
-
-export interface IUserAddres{
+export interface IUserAddres {
     street: string,
     suite: string,
     city: string 
+}
+
+
+export interface ICompany{
+    bs: string,
+    catchPhrase: string,
+    name: string 
 };
 
 export interface IUserInfo {
@@ -24,5 +30,5 @@ export interface IUserInfo {
     address: IUserAddres,
     phone: string,
     website: string,
-    company: string
+    company: ICompany
 };

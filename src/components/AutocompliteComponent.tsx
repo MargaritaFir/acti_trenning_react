@@ -7,15 +7,16 @@ import List from './List';
 
 const AutocompliteComponent = (props:any) => {
 
-    const {users, getCurrentUserId, nameQuery} = props;
+    const {users, getCurrentUserId, nameQuery, placeholder, notFound} = props;
 
     const [query, changeQuery] = useState('');
     const [usersList, updateUsersList] = useState([]);
     const [isShowList, changeShowList] = useState(false);
 
     useEffect(() => {
-        changeQuery(nameQuery);
-    }, [nameQuery, isShowList]);
+       changeQuery(nameQuery);
+       
+    }, [nameQuery]);
 
 
 
@@ -59,10 +60,34 @@ const AutocompliteComponent = (props:any) => {
     }
 
 
+    const clearQuery = () => {
+        changeQuery('');
+        getCurrentUserId(null) 
+    }
+    const onVisibleList = () => {
+        changeShowList(true);
+    }
+
     return(
-        <div id="autocomplite">
-            <InputField onInput={onInput} query={query} />
-         { (isShowList) ? <List users={usersList} getUserInfos={getUserInfos}/>: null}
+        <div className='form_autocomplite' id="autocomplite">
+            <InputField 
+                onInput={onInput} 
+                query={query}
+                clearQuery={clearQuery}
+                onVisibleList={onVisibleList}
+                placeholder={placeholder}
+            />
+        { 
+
+        (isShowList) ?
+                        <List 
+                            users={usersList} 
+                            getUserInfos={getUserInfos}
+                            notFound={notFound}
+                        /> 
+                        : null
+        }
+
         </div>
     )
 }
