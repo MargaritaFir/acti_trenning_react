@@ -1,4 +1,4 @@
-export function modifyUsers(users:any){
+export function modifyUsersInfo(users:any){
     return users.map((user:any) => {
         return {
             id: user.id,
@@ -7,6 +7,6 @@ export function modifyUsers(users:any){
     })
 }
 
-export function getSelectedUser( users:any, id:number){
+export function getSelectedUser(users:any, id:number){
     return users.find((user:any) => user.id === id)
 }

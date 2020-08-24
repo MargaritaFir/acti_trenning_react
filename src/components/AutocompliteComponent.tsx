@@ -1,45 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import {modifyUsers, getSelectedUser} from '../common/modifyUsers';
+import React, { useEffect, useState} from 'react';
 import {autocomplite} from '../common/autocompliteFunction';
 import InputField from './InputField'
 import List from './List';
-import {IListProps} from '../common/commonInterfaces'
+
 
 
 const AutocompliteComponent = (props:any) => {
-    console.log('auto', props)
+
+    const {users, getCurrentUserId, nameQuery} = props;
+
     const [query, changeQuery] = useState('');
     const [usersList, updateUsersList] = useState([]);
-    console.log('usersList', usersList)
+    const [isShowList, changeShowList] = useState(false);
+
+    useEffect(() => {
+        changeQuery(nameQuery);
+    }, [nameQuery, isShowList]);
+
 
 
     useEffect(() => {
-        const users =  modifyUsers(props.users);
+
+        const onHiddenList = (e:any) => {
+            const list = document.getElementById('autoList');
+            const id = e.target.id;
+            const isItemClass = e.target.classList.contains('item');
+            const isClose = (id !=='autoList' || id !== 'inputAutocomplite' || !isItemClass)? true: false;
+            if(list && isClose){
+                changeShowList(false);
+            } 
+        }
+        document.addEventListener('click', onHiddenList)
+
+        return () => document.removeEventListener('click', onHiddenList );
+
+    }, [])
+
+
+    useEffect(() => {
         const newList:any = autocomplite(users, query);
         if(newList){
             updateUsersList(newList);
         } else {
             updateUsersList([])
         }        
-    }, [query, props]);
+    }, [query, users]);
 
       const onInput = (e:any) => {
         const value = e.target.value;
         changeQuery(value);
-        // console.log('query', query);
+        changeShowList(true);
       }
 
     const getUserInfos = (id:number):void =>{
         console.log('auto get', id);
-        const currentUser = getSelectedUser(props.users, id);
-        console.log(currentUser, 'current')
-        changeQuery(getSelectedUser(props.users, id).name);
+        getCurrentUserId(id);
+        changeShowList(false);
     }
+
 
     return(
         <div id="autocomplite">
-            <InputField onInput={onInput} query={query}/>
-            <List users={usersList} getUserInfos={getUserInfos}/>
+            <InputField onInput={onInput} query={query} />
+         { (isShowList) ? <List users={usersList} getUserInfos={getUserInfos}/>: null}
         </div>
     )
 }

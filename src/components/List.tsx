@@ -1,21 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import ListItem from './ListItem'
-import {  IItem, IListProps, IUserInfo } from '../common/commonInterfaces';
+import {  IItem, IList, IUserInfo } from '../common/commonInterfaces';
 
-// interface  IListPropsExtend extends IListProps {
-//     getUserInfos(id:number):void
-// }
 
+interface IListProps extends IList {
+    getUserInfos:(id:number) => void;   
+} 
 
 const List = (props: any ) => {
     const {users, getUserInfos} = props;
-    console.log('users in list', users)
+    // console.log('users in list', users)
 
     const [usersList, updateUsersList] = useState([]);
 
     useEffect(() => {
         updateUsersList(users)
-    })
+    }, [])
 
     useEffect(() => {
         updateUsersList(props.users);
@@ -25,9 +25,9 @@ const List = (props: any ) => {
     const myList = () => usersList.map((user:any) => <ListItem key={user.id} {...user} getUserInfos={getUserInfos}/>)
 
     if(usersList.length){
-        return (<>{myList()}</>)
+        return (<div id='autoList'>{myList()}</div>)
     } else {
-        return <div> Empty Element</div>
+        return null
     }
 
    

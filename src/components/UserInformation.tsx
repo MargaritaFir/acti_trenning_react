@@ -1,41 +1,33 @@
 import React from 'react';
-
-interface IUserAddres{
-    street: string,
-    suite: string,
-    city: string 
-}
-
-interface IUserInfo {
-    id: number,
-    name: string,
-    username: string,
-    email: string,
-    address: IUserAddres,
-    phone: string,
-    website: string,
-    company: string
-}
+import { IUserInfo } from '../common/commonInterfaces';
 
 
-const UserInformation = (props:any) => {
-    const {name, username, email, address, phone, website} = props.user;
-    console.log('user props', props)
+const UserInformation = (props:{user:IUserInfo | null}) => {
 
-    return (
-        <div className="userInfos">
-            <fieldset>
-                <legend>UserInfos</legend>
-                <div>{name}</div>
-                <div>{username}</div>
-                <div>{email}</div>
-                <div>{address}</div>
-                <div>{phone}</div>
-                <div>{website}</div>
-            </fieldset>
-            
-        </div>
-    )
+    const user = props.user;
+   
+    console.log('user props', props);
+    
+    if(user){
+        const {name, username, email, address, phone, website} = user;
+        return (
+            <div className="userInfos">
+                <fieldset>
+                    <legend>{username}</legend>
+                    <div>{name}</div>
+                    {/* <div>{username}</div> */}
+                    <div>{email}</div>
+                    {/* <div>{address}</div> */}
+                    <div>{phone}</div>
+                    <div>{website}</div>
+                </fieldset>
+                
+            </div>
+        )
+    } else {
+        return null
+    }
+   
 }
 
 export default UserInformation;

@@ -1,12 +1,11 @@
 import React from 'react';
+import {IItem} from '../common/commonInterfaces'
 
-interface IItem{
-    id: number,
-    name: string,
+interface IItemProps extends IItem{
+    getUserInfos:(id:number) => void;
 }
 
-const ListItem = (props:any) => {
-    console.log('listItem', props)
+const ListItem = (props:IItemProps) => {
 
     return (
         <div className="item" id={`item_${props.id}`} onClick={() => props.getUserInfos(props.id)}>

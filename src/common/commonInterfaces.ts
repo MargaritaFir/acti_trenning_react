@@ -5,8 +5,8 @@ export interface IItem {
 };
 
 
-export interface  IListProps {
-    users: any
+export interface IList{
+    users:IItem[];
 };
 
 
