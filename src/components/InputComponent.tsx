@@ -3,7 +3,7 @@ import {IInputProps} from '../common/commonInterfaces';
 
 
 
-const InputField = ( props:IInputProps ) => {
+const InputField:React.FC<IInputProps> = ( props:IInputProps ) => {
 
     const { query, placeholder, onInput, clearQuery, onVisibleList } = props;
 

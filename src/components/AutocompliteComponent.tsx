@@ -5,7 +5,7 @@ import List from './List';
 import { IAutocompliteProps, IItem } from '../common/commonInterfaces';
 
 
-const AutocompliteComponent = ( props:IAutocompliteProps ) => {
+const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocompliteProps ) => {
 
     const { users, getCurrentUserId, nameQuery, placeholder, notFound } = props;
 

@@ -1,9 +1,7 @@
-
 export interface IItem {
     id: number,
     name: string,
 };
-
 
 export interface IList{
     users:IItem[] | [];
@@ -25,8 +23,7 @@ export interface IUserAddres {
     city: string 
 };
 
-
-export interface ICompany{
+export interface ICompany {
     bs: string,
     catchPhrase: string,
     name: string 
@@ -48,11 +45,18 @@ export interface IInputProps {
     placeholder:string;
     onInput:(e:any) => void;
     clearQuery: () => void;
-
     onVisibleList: () => void;
 };
 
+export interface IItemsContainerProps {
+    usersList: IItem[];
+    getUserInfos:(id:number) => void;  
+}
 
-export interface IItemProps extends IItem{
+export interface IItemProps extends IItem {
     getUserInfos:(id:number) => void;
 };
+
+export interface INotFoundProps {
+    notFound: string;
+}

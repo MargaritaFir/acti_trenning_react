@@ -2,7 +2,7 @@ import React from 'react';
 import { IItemProps } from '../common/commonInterfaces'
 
 
-const ListItem  = ( props:IItemProps ) => {
+const ListItem:React.FC<IItemProps>  = ( props:IItemProps ) => {
 
     return (
         <div className="item" id={`item_${props.id}`} onClick={() => props.getUserInfos(props.id)}>

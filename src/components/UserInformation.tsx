@@ -6,7 +6,7 @@ interface IPropsUserInfo {
 }
 
 
-const UserInformation = ( props:IPropsUserInfo ) => {
+const UserInformation:React.FC<IPropsUserInfo> = ( props:IPropsUserInfo ) => {
 
     const user = props.user; 
     
