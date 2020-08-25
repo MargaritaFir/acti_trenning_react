@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import UsersApi from '../common/api';
 import { URL, placeholder, notFound } from '../common/constants';
 import { modifyUsersInfo, getSelectedUser } from '../common/usersOperations';
-import AutocompliteComponent from './AutocompliteComponent';
-import UserInformation from './UserInformation';
+import AutocompliteComponent from '../components/autocompliteComponent/AutocompliteComponent';
+import UserInformation from '../components/userInfoComponent/UserInformation';
 import { IUserInfo } from '../common/commonInterfaces';
 
 

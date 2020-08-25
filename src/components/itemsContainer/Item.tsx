@@ -1,8 +1,8 @@
 import React from 'react';
-import { IItemProps } from '../common/commonInterfaces'
+import { IItemProps } from '../../common/commonInterfaces'
 
 
-const ListItem:React.FC<IItemProps>  = ( props:IItemProps ) => {
+const Item:React.FC<IItemProps>  = ( props:IItemProps ) => {
 
     return (
         <div className="item" id={`item_${props.id}`} onClick={() => props.getUserInfos(props.id)}>
@@ -11,4 +11,4 @@ const ListItem:React.FC<IItemProps>  = ( props:IItemProps ) => {
     )
 };
 
-export default ListItem;
+export default Item;

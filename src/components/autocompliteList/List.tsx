@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ItemsContainer from './ItemsContainer';
+import ItemsContainer from '../itemsContainer/ItemsContainer';
 import NotFoundItem from './NotFoundItem';
-import { IItem, IList } from '../common/commonInterfaces';
+import { IItem, IList } from '../../common/commonInterfaces';
 
 
 const List:React.FC<IList> = ( props: IList ) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {IInputProps} from '../common/commonInterfaces';
+import {IInputProps} from '../../common/commonInterfaces';
 
 
 

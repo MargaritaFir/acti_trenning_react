@@ -1,8 +1,8 @@
-import React, { useEffect, useState} from 'react';
-import {autocomplite} from '../common/autocompliteFunction';
-import InputField from './InputComponent';
-import List from './List';
-import { IAutocompliteProps, IItem } from '../common/commonInterfaces';
+import React, { useEffect, useState } from 'react';
+import {autocomplite} from '../../common/autocompliteFunction';
+import InputComponent from '../inputComponent/InputComponent';
+import List from '../autocompliteList/List';
+import { IAutocompliteProps, IItem } from '../../common/commonInterfaces';
 
 
 const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocompliteProps ) => {
@@ -50,10 +50,10 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
 
 
     useEffect(() => {
-        if(!query) changeShowList(false)  
+        if(!query) changeShowList(false);  
     }, [query])
 
-    const onInput = (e:any) => {
+    const onInput = (e:React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         changeQuery(value);
         changeShowList(true);
@@ -83,7 +83,7 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
 
     return (
         <div className='form_autocomplite' id="autocomplite">
-            <InputField 
+            <InputComponent 
                 onInput={onInput} 
                 query={query}
                 clearQuery={clearQuery}

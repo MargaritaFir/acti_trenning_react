@@ -1,6 +1,6 @@
 import React from 'react';
-import ListItem from './ListItem';
-import { IItemsContainerProps, IItem } from '../common/commonInterfaces';
+import Item from './Item';
+import { IItemsContainerProps, IItem } from '../../common/commonInterfaces';
 
 
     const ItemsContainer:React.FC<IItemsContainerProps> = (props:IItemsContainerProps) => {
@@ -8,7 +8,7 @@ import { IItemsContainerProps, IItem } from '../common/commonInterfaces';
         const {getUserInfos, usersList} = props;
         return (
             <React.Fragment>
-                {usersList.map((user:IItem) => <ListItem key={user.id} {...user} getUserInfos={getUserInfos}/>)}
+                {usersList.map((user:IItem) => <Item key={user.id} {...user} getUserInfos={getUserInfos}/>)}
             </React.Fragment>
             
         )
