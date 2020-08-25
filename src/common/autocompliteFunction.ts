@@ -1,7 +1,6 @@
 import { IItem } from '../common/commonInterfaces';
 
-
-export function autocomplite( users:IItem[], query: string ){
+export function autocomplite( users:IItem[], query:string ){
    const userValue = query.toLowerCase().trim();
 
    if(userValue.match(/[a-zA-Z]/i)){

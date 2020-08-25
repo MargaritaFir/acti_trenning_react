@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import {autocomplite} from '../common/autocompliteFunction';
-import InputField from './InputField'
+import InputField from './InputComponent';
 import List from './List';
 import { IAutocompliteProps, IItem } from '../common/commonInterfaces';
 
@@ -14,10 +14,8 @@ const AutocompliteComponent = ( props:IAutocompliteProps ) => {
     const [ isShowList, changeShowList ] = useState<boolean>(false);
 
     useEffect(() => {
-       changeQuery(nameQuery);
-       
+        changeQuery(nameQuery);
     }, [nameQuery]);
-
 
 
     useEffect(() => {
@@ -26,16 +24,17 @@ const AutocompliteComponent = ( props:IAutocompliteProps ) => {
             const list = document.getElementById('autoList');
             const id = e.target.id;
             const isItemClass:boolean = e.target.classList.contains('item');
-            const isClose:boolean = (id !=='autoList' || id !== 'inputAutocomplite' || !isItemClass)? true: false;
+            const isClose:boolean = (id ==='autoList' || id === 'inputAutocomplite' || isItemClass)? false: true;
             if(list && isClose){
                 changeShowList(false);
             } 
         }
+
         document.addEventListener('click', onHiddenList)
 
         return () => document.removeEventListener('click', onHiddenList );
 
-    }, [])
+    }, []);
 
 
     useEffect(() => {
@@ -44,29 +43,34 @@ const AutocompliteComponent = ( props:IAutocompliteProps ) => {
             updateUsersList(newList);
         } else {
             updateUsersList([])
-        }        
+        }          
     }, [query, users]);
 
-      const onInput = (e:any) => {
+
+    useEffect(() => {
+        if(!query) changeShowList(false)  
+    }, [query])
+
+    const onInput = (e:any) => {
         const value = e.target.value;
         changeQuery(value);
         changeShowList(true);
-      }
+    };
 
     const getUserInfos = (id:number) =>{
-        console.log('auto get', id);
         getCurrentUserId(id);
         changeShowList(false);
-    }
+    };
 
 
     const clearQuery = () => {
         changeQuery('');
-        getCurrentUserId(null) 
-    }
+    };
+
+
     const onVisibleList = () => {
-        changeShowList(true);
-    }
+        if(query) changeShowList(true);
+    };
 
     return(
         <div className='form_autocomplite' id="autocomplite">
@@ -77,16 +81,14 @@ const AutocompliteComponent = ( props:IAutocompliteProps ) => {
                 onVisibleList={onVisibleList}
                 placeholder={placeholder}
             />
-        { 
-
-        (isShowList) ?
-                        <List 
-                            users={usersList} 
-                            getUserInfos={getUserInfos}
-                            notFound={notFound}
-                        /> 
-                        : null
-        }
+            {  (isShowList) ?
+                                <List 
+                                    users={usersList} 
+                                    getUserInfos={getUserInfos}
+                                    notFound={notFound}
+                                /> 
+                                : null
+            }
 
         </div>
     )

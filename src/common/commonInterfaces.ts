@@ -13,7 +13,7 @@ export interface IList{
 
 export interface IAutocompliteProps  {
     users:IItem[] | [];
-    getCurrentUserId:(id:number | null) => void;  
+    getCurrentUserId:(id:number) => void;  
     placeholder: string;
     notFound:string;
     nameQuery:string
@@ -49,7 +49,7 @@ export interface IInputProps {
     onInput:(e:any) => void;
     clearQuery: () => void;
 
-    onVisibleList?: () => void;
+    onVisibleList: () => void;
 };
 
 

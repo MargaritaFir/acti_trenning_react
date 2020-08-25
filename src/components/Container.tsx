@@ -7,7 +7,6 @@ import UserInformation from './UserInformation';
 import { IUserInfo } from '../common/commonInterfaces';
 
 
-
 const Container:React.FC = () => {
 
     const [ users, updateUsers ] = useState<IUserInfo[]>([]);
@@ -25,6 +24,7 @@ const Container:React.FC = () => {
 
     }, []);
 
+
     const getCurrentUserId =(id:number) => {
         const currentUserNext = getSelectedUser(users, id);
         updateCurrentUser(currentUserNext);
@@ -33,16 +33,14 @@ const Container:React.FC = () => {
             changeQuery(currentUserNext.name);
         } else {
             changeQuery(''); 
-        }
-
-        
+        }      
     }
 
     return (
         <div className='container'>
             <AutocompliteComponent 
                 users={modifyUsersInfo(users)} 
-                getCurrentUserId={(id:any) => getCurrentUserId(id)} 
+                getCurrentUserId={(id) => getCurrentUserId(id)} 
                 nameQuery={nameQuery}
                 placeholder={placeholder}
                 notFound={notFound}
