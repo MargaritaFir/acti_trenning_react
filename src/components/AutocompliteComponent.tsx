@@ -12,6 +12,7 @@ const AutocompliteComponent = ( props:IAutocompliteProps ) => {
     const [ query, changeQuery ] = useState<string>('');
     const [ usersList, updateUsersList ] = useState<IItem[]>([]);
     const [ isShowList, changeShowList ] = useState<boolean>(false);
+    const [ currentUserId, changeCurrentUserId ] = useState<number|null>(null);
 
     useEffect(() => {
         changeQuery(nameQuery);
@@ -24,7 +25,8 @@ const AutocompliteComponent = ( props:IAutocompliteProps ) => {
             const list = document.getElementById('autoList');
             const id = e.target.id;
             const isItemClass:boolean = e.target.classList.contains('item');
-            const isClose:boolean = (id ==='autoList' || id === 'inputAutocomplite' || isItemClass)? false: true;
+            const isClose:boolean = (id === 'autoList' || id === 'inputAutocomplite' || isItemClass) ? false : true;
+
             if(list && isClose){
                 changeShowList(false);
             } 
@@ -42,7 +44,7 @@ const AutocompliteComponent = ( props:IAutocompliteProps ) => {
         if(newList){
             updateUsersList(newList);
         } else {
-            updateUsersList([])
+            updateUsersList([]);
         }          
     }, [query, users]);
 
@@ -58,6 +60,13 @@ const AutocompliteComponent = ( props:IAutocompliteProps ) => {
     };
 
     const getUserInfos = (id:number) =>{
+
+        if(id === currentUserId ) {
+            changeQuery(nameQuery);
+            changeShowList(false);
+            return;
+        }
+        changeCurrentUserId(id);
         getCurrentUserId(id);
         changeShowList(false);
     };
@@ -72,7 +81,7 @@ const AutocompliteComponent = ( props:IAutocompliteProps ) => {
         if(query) changeShowList(true);
     };
 
-    return(
+    return (
         <div className='form_autocomplite' id="autocomplite">
             <InputField 
                 onInput={onInput} 
