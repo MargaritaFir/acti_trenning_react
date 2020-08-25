@@ -3,15 +3,15 @@ export interface IItem {
     name: string,
 };
 
-export interface IList{
-    users:IItem[] | [];
-    getUserInfos:(id:number) => void;  
+export interface IList {
+    items:IItem[] | [];
+    getItemInfos:(id:number) => void;  
     notFound:string;
 };
 
 export interface IAutocompliteProps  {
-    users:IItem[] | [];
-    getCurrentUserId:(id:number) => void;  
+    items:IItem[] | [];
+    getCurrentItemId:(id:number) => void;  
     placeholder: string;
     notFound:string;
     nameQuery:string
@@ -49,12 +49,12 @@ export interface IInputProps {
 };
 
 export interface IItemsContainerProps {
-    usersList: IItem[];
-    getUserInfos:(id:number) => void;  
+    itemsList: IItem[];
+    getItemInfos:(id:number) => void;  
 }
 
 export interface IItemProps extends IItem {
-    getUserInfos:(id:number) => void;
+    getItemInfos:(id:number) => void;
 };
 
 export interface INotFoundProps {

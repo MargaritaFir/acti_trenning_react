@@ -7,12 +7,12 @@ import { IAutocompliteProps, IItem } from '../../common/commonInterfaces';
 
 const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocompliteProps ) => {
 
-    const { users, getCurrentUserId, nameQuery, placeholder, notFound } = props;
+    const { items, getCurrentItemId, nameQuery, placeholder, notFound } = props;
 
     const [ query, changeQuery ] = useState<string>('');
-    const [ usersList, updateUsersList ] = useState<IItem[]>([]);
+    const [ itemsList, updateitemsList ] = useState<IItem[]>([]);
     const [ isShowList, changeShowList ] = useState<boolean>(false);
-    const [ currentUserId, changeCurrentUserId ] = useState<number|null>(null);
+    const [ currentItemId, changeCurrentItemId ] = useState<number|null>(null);
 
     useEffect(() => {
         changeQuery(nameQuery);
@@ -40,13 +40,13 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
 
 
     useEffect(() => {
-        const newList:IItem[] | null = autocomplite(users, query);
+        const newList:IItem[] | null = autocomplite(items, query);
         if(newList){
-            updateUsersList(newList);
+            updateitemsList(newList);
         } else {
-            updateUsersList([]);
+            updateitemsList([]);
         }          
-    }, [query, users]);
+    }, [query, items]);
 
 
     useEffect(() => {
@@ -59,15 +59,15 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
         changeShowList(true);
     };
 
-    const getUserInfos = (id:number) =>{
+    const getItemInfos = (id:number) =>{
 
-        if(id === currentUserId ) {
+        if(id === currentItemId ) {
             changeQuery(nameQuery);
             changeShowList(false);
             return;
         }
-        changeCurrentUserId(id);
-        getCurrentUserId(id);
+        changeCurrentItemId(id);
+        getCurrentItemId(id);
         changeShowList(false);
     };
 
@@ -92,8 +92,8 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
             />
             {  (isShowList) ?
                                 <List 
-                                    users={usersList} 
-                                    getUserInfos={getUserInfos}
+                                    items={itemsList} 
+                                    getItemInfos={getItemInfos}
                                     notFound={notFound}
                                 /> 
                                 : null

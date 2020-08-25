@@ -5,10 +5,10 @@ import { IItemsContainerProps, IItem } from '../../common/commonInterfaces';
 
     const ItemsContainer:React.FC<IItemsContainerProps> = (props:IItemsContainerProps) => {
 
-        const {getUserInfos, usersList} = props;
+        const {getItemInfos, itemsList} = props;
         return (
             <React.Fragment>
-                {usersList.map((user:IItem) => <Item key={user.id} {...user} getUserInfos={getUserInfos}/>)}
+                {itemsList.map((item:IItem) => <Item key={item.id} {...item} getItemInfos={getItemInfos}/>)}
             </React.Fragment>
             
         )

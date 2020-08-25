@@ -39,8 +39,8 @@ const Container:React.FC = () => {
     return (
         <div className='container'>
             <AutocompliteComponent 
-                users={modifyUsersInfo(users)} 
-                getCurrentUserId={(id) => getCurrentUserId(id)} 
+                items={modifyUsersInfo(users)} 
+                getCurrentItemId={(id) => getCurrentUserId(id)} 
                 nameQuery={nameQuery}
                 placeholder={placeholder}
                 notFound={notFound}

@@ -5,19 +5,19 @@ import { IItem, IList } from '../../common/commonInterfaces';
 
 
 const List:React.FC<IList> = ( props: IList ) => {
-    const { users, getUserInfos, notFound } = props;
+    const { items, getItemInfos, notFound } = props;
 
-    const [ usersList, updateUsersList ] = useState<IItem[]>([]);
+    const [ itemsList, updateitemsList ] = useState<IItem[]>([]);
 
     useEffect(() => {
-        if(users) updateUsersList(users);
+        if(items) updateitemsList(items);
 
-    }, [users]);
+    }, [items]);
 
 
     return (
         <div className='autocomplite_list' id='autoList'>
-            {(usersList.length)? <ItemsContainer usersList={usersList} getUserInfos={getUserInfos}/> : <NotFoundItem notFound={notFound} /> }
+            {(itemsList.length)? <ItemsContainer itemsList={itemsList} getItemInfos={getItemInfos}/> : <NotFoundItem notFound={notFound} /> }
         </div>
     )
 }
