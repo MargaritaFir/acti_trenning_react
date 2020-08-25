@@ -2,16 +2,16 @@ import React, { useEffect, useState} from 'react';
 import {autocomplite} from '../common/autocompliteFunction';
 import InputField from './InputField'
 import List from './List';
+import { IAutocompliteProps, IItem } from '../common/commonInterfaces';
 
 
+const AutocompliteComponent = ( props:IAutocompliteProps ) => {
 
-const AutocompliteComponent = (props:any) => {
+    const { users, getCurrentUserId, nameQuery, placeholder, notFound } = props;
 
-    const {users, getCurrentUserId, nameQuery, placeholder, notFound} = props;
-
-    const [query, changeQuery] = useState('');
-    const [usersList, updateUsersList] = useState([]);
-    const [isShowList, changeShowList] = useState(false);
+    const [ query, changeQuery ] = useState<string>('');
+    const [ usersList, updateUsersList ] = useState<IItem[]>([]);
+    const [ isShowList, changeShowList ] = useState<boolean>(false);
 
     useEffect(() => {
        changeQuery(nameQuery);
@@ -25,8 +25,8 @@ const AutocompliteComponent = (props:any) => {
         const onHiddenList = (e:any) => {
             const list = document.getElementById('autoList');
             const id = e.target.id;
-            const isItemClass = e.target.classList.contains('item');
-            const isClose = (id !=='autoList' || id !== 'inputAutocomplite' || !isItemClass)? true: false;
+            const isItemClass:boolean = e.target.classList.contains('item');
+            const isClose:boolean = (id !=='autoList' || id !== 'inputAutocomplite' || !isItemClass)? true: false;
             if(list && isClose){
                 changeShowList(false);
             } 
@@ -39,7 +39,7 @@ const AutocompliteComponent = (props:any) => {
 
 
     useEffect(() => {
-        const newList:any = autocomplite(users, query);
+        const newList:IItem[] | null = autocomplite(users, query);
         if(newList){
             updateUsersList(newList);
         } else {
@@ -53,7 +53,7 @@ const AutocompliteComponent = (props:any) => {
         changeShowList(true);
       }
 
-    const getUserInfos = (id:number):void =>{
+    const getUserInfos = (id:number) =>{
         console.log('auto get', id);
         getCurrentUserId(id);
         changeShowList(false);

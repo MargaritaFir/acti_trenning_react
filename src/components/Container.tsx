@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import UsersApi from '../common/api';
-import {URL, placeholder, notFound} from '../common/constants';
-import {modifyUsersInfo, getSelectedUser} from '../common/usersOperations';
+import { URL, placeholder, notFound } from '../common/constants';
+import { modifyUsersInfo, getSelectedUser } from '../common/usersOperations';
 import AutocompliteComponent from './AutocompliteComponent';
 import UserInformation from './UserInformation';
+import { IUserInfo } from '../common/commonInterfaces';
 
 
 
 const Container:React.FC = () => {
 
-    const [ users, updateUsers ] = useState([]);
-    const [ currentUser, updateCurrentUser ] = useState(null);
-    const [ nameQuery, changeQuery ] = useState('');
+    const [ users, updateUsers ] = useState<IUserInfo[]>([]);
+    const [ currentUser, updateCurrentUser ] = useState<IUserInfo | null>(null);
+    const [ nameQuery, changeQuery ] = useState<string>('');
 
     useEffect(() => {
         const fetchData = async() => {
@@ -26,13 +27,12 @@ const Container:React.FC = () => {
 
     const getCurrentUserId =(id:number) => {
         const currentUserNext = getSelectedUser(users, id);
-        // console.log('get current', currentUser )
         updateCurrentUser(currentUserNext);
-        // console.log('currentUser in container', currentUserNext, 'id', id)
+
         if(currentUserNext) {
             changeQuery(currentUserNext.name);
         } else {
-            changeQuery('') 
+            changeQuery(''); 
         }
 
         

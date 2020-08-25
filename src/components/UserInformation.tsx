@@ -6,14 +6,14 @@ interface IPropsUserInfo {
 }
 
 
-const UserInformation = (props:IPropsUserInfo) => {
+const UserInformation = ( props:IPropsUserInfo ) => {
 
-    const user = props.user;
-   
-    console.log('user props', props);
+    const user = props.user; 
     
     if(user){
-        const {name, username, email, address, phone, website, company} = user;
+
+        const { name, username, email, address, phone, website, company } = user;
+
         return (
             <div className="userInfos">
                 <fieldset>
@@ -30,7 +30,7 @@ const UserInformation = (props:IPropsUserInfo) => {
             </div>
         )
     } else {
-        return null
+        return null;
     }
    
 }

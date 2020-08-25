@@ -1,9 +1,11 @@
 import React from 'react';
+import {IInputProps} from '../common/commonInterfaces';
 
 
-const InputField = (props:any) => {
 
-    const {query, placeholder, onInput} = props;
+const InputField = ( props:IInputProps ) => {
+
+    const { query, placeholder, onInput, clearQuery } = props;
 
     return (
        <div className='input_container'>
@@ -16,7 +18,7 @@ const InputField = (props:any) => {
             />
             <span 
                 className="clear_input" 
-                onClick={() => props.clearQuery()} 
+                onClick={() => clearQuery()} 
             > &times; </span>
        </div>    
     )

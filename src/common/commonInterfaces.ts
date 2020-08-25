@@ -6,14 +6,24 @@ export interface IItem {
 
 
 export interface IList{
-    users:IItem[];
+    users:IItem[] | [];
+    getUserInfos:(id:number) => void;  
+    notFound:string;
+};
+
+export interface IAutocompliteProps  {
+    users:IItem[] | [];
+    getCurrentUserId:(id:number | null) => void;  
+    placeholder: string;
+    notFound:string;
+    nameQuery:string
 };
 
 export interface IUserAddres {
     street: string,
     suite: string,
     city: string 
-}
+};
 
 
 export interface ICompany{
@@ -31,4 +41,18 @@ export interface IUserInfo {
     phone: string,
     website: string,
     company: ICompany
+};
+
+export interface IInputProps {
+    query: string;  
+    placeholder:string;
+    onInput:(e:any) => void;
+    clearQuery: () => void;
+
+    onVisibleList?: () => void;
+};
+
+
+export interface IItemProps extends IItem{
+    getUserInfos:(id:number) => void;
 };
