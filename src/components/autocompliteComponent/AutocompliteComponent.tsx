@@ -57,6 +57,9 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
         const value = e.target.value;
         changeQuery(value);
         changeShowList(true);
+        if(!value){
+            getCurrentItemId(null);
+        }
     };
 
     const getItemInfos = (id:number) =>{
@@ -74,6 +77,7 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
 
     const clearQuery = () => {
         changeQuery('');
+        getCurrentItemId(null);
     };
 
 

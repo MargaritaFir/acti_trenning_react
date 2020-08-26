@@ -25,7 +25,7 @@ const Container:React.FC = () => {
     }, []);
 
 
-    const getCurrentUserId =(id:number) => {
+    const getCurrentUserId =(id:number|null) => {
         const currentUserNext = getSelectedUser(users, id);
         updateCurrentUser(currentUserNext);
 

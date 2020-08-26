@@ -9,6 +9,6 @@ export function modifyUsersInfo( users:IUserInfo[] ){
     })
 }
 
-export function getSelectedUser( users:any, id:number ){
+export function getSelectedUser( users:any, id:number|null ){
     return users.find((user:any) => user.id === id)
 }

@@ -11,7 +11,7 @@ export interface IList {
 
 export interface IAutocompliteProps  {
     items:IItem[] | [];
-    getCurrentItemId:(id:number) => void;  
+    getCurrentItemId:(id:number|null) => void;  
     placeholder: string;
     notFound:string;
     nameQuery:string
