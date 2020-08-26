@@ -9,15 +9,15 @@ import { IUserInfo } from '../common/commonInterfaces';
 
 const Container:React.FC = () => {
 
-    const [ users, updateUsers ] = useState<IUserInfo[]>([]);
-    const [ currentUser, updateCurrentUser ] = useState<IUserInfo | null>(null);
-    const [ nameQuery, changeQuery ] = useState<string>('');
+    const [ users, setUsers ] = useState<IUserInfo[]>([]);
+    const [ currentUser, setCurrentUser ] = useState<IUserInfo | null>(null);
+    const [ nameQuery, setQuery ] = useState<string>('');
 
     useEffect(() => {
         const fetchData = async() => {
             const api = new UsersApi(URL);
             const usersFetch = await api.getUsers();
-            updateUsers(usersFetch);  
+            setUsers(usersFetch);  
         }
 
         fetchData();
@@ -27,12 +27,12 @@ const Container:React.FC = () => {
 
     const getCurrentUserId =(id:number|null) => {
         const currentUserNext = getSelectedUser(users, id);
-        updateCurrentUser(currentUserNext);
+        setCurrentUser(currentUserNext);
 
         if(currentUserNext) {
-            changeQuery(currentUserNext.name);
+            setQuery(currentUserNext.name);
         } else {
-            changeQuery(''); 
+            setQuery(''); 
         }      
     }
 

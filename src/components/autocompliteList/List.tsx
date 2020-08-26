@@ -7,10 +7,10 @@ import { IItem, IList } from '../../common/commonInterfaces';
 const List:React.FC<IList> = ( props: IList ) => {
     const { items, getItemInfos, notFound } = props;
 
-    const [ itemsList, updateitemsList ] = useState<IItem[]>([]);
+    const [ itemsList, setItemsList ] = useState<IItem[]>([]);
 
     useEffect(() => {
-        if(items) updateitemsList(items);
+        if(items) setItemsList(items);
 
     }, [items]);
 

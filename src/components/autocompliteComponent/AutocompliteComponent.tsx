@@ -9,13 +9,13 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
 
     const { items, getCurrentItemId, nameQuery, placeholder, notFound } = props;
 
-    const [ query, changeQuery ] = useState<string>('');
-    const [ itemsList, updateitemsList ] = useState<IItem[]>([]);
-    const [ isShowList, changeShowList ] = useState<boolean>(false);
-    const [ currentItemId, changeCurrentItemId ] = useState<number|null>(null);
+    const [ query, setQuery ] = useState<string>('');
+    const [ itemsList, setItemsList ] = useState<IItem[]>([]);
+    const [ isShowList, setShowList ] = useState<boolean>(false);
+    const [ currentItemId, setCurrentItemId ] = useState<number|null>(null);
 
     useEffect(() => {
-        changeQuery(nameQuery);
+        setQuery(nameQuery);
     }, [nameQuery]);
 
 
@@ -28,7 +28,7 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
             const isClose:boolean = (id === 'autoList' || id === 'inputAutocomplite' || isItemClass) ? false : true;
 
             if(list && isClose){
-                changeShowList(false);
+                setShowList(false);
             } 
         }
 
@@ -42,21 +42,21 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
     useEffect(() => {
         const newList:IItem[] | null = autocomplite(items, query);
         if(newList){
-            updateitemsList(newList);
+            setItemsList(newList);
         } else {
-            updateitemsList([]);
+            setItemsList([]);
         }          
     }, [query, items]);
 
 
     useEffect(() => {
-        if(!query) changeShowList(false);  
+        if(!query) setShowList(false);  
     }, [query])
 
     const onInput = (e:React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        changeQuery(value);
-        changeShowList(true);
+        setQuery(value);
+        setShowList(true);
         if(!value){
             getCurrentItemId(null);
         }
@@ -65,24 +65,24 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
     const getItemInfos = (id:number) =>{
 
         if(id === currentItemId ) {
-            changeQuery(nameQuery);
-            changeShowList(false);
+            setQuery(nameQuery);
+            setShowList(false);
             return;
         }
-        changeCurrentItemId(id);
+        setCurrentItemId(id);
         getCurrentItemId(id);
-        changeShowList(false);
+        setShowList(false);
     };
 
 
     const clearQuery = () => {
-        changeQuery('');
+        setQuery('');
         getCurrentItemId(null);
     };
 
 
     const onVisibleList = () => {
-        if(query) changeShowList(true);
+        if(query) setShowList(true);
     };
 
     return (
