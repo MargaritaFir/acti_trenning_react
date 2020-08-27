@@ -9,5 +9,5 @@ export function filter( items:IItem[], value:string ){
         return items.filter((item:IItem) => item.name.toLowerCase().includes(itemValue));
    }
 
-   return null;
+   return [];
 }

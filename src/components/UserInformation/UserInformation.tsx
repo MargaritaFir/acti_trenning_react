@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import { IUserInfo } from '../../common/interfaces';
 
 interface IPropsUserInfo {
@@ -27,4 +27,4 @@ const UserInformation:React.FC<IPropsUserInfo> = ( { user } ) => {
    
 }
 
-export default UserInformation;
+export default memo(UserInformation);

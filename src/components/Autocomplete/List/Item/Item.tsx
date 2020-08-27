@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 
 interface IProps {
     id: number,
@@ -8,8 +8,10 @@ interface IProps {
 
 const Item:React.FC<IProps> = ( { id, name, getItemInfos } ) => {
 
+    const handleClick = useCallback(() => getItemInfos(id), [id, getItemInfos])
+
     return (
-        <div className="item" id={`item_${id}`} onClick={() => getItemInfos(id)}>
+        <div className="item" id={`item_${id}`} onClick={handleClick}>
             <span>{name}</span>
         </div>
     )

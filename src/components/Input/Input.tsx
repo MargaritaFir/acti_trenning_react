@@ -1,32 +1,35 @@
-import React from 'react';
+import React, {useCallback, memo} from 'react';
 
 interface IProps {
     query: string;  
     placeholder:string;
-    onInput:(e:any) => void;
+    onChange:(e:any) => void;
     clearQuery: () => void;
     onVisibleList: () => void;
 };
 
 
-const Input:React.FC<IProps> = ( { query, placeholder, onInput, clearQuery, onVisibleList } ) => {
+const Input:React.FC<IProps> = ( { query, placeholder, onChange, clearQuery, onVisibleList } ) => {
 
+    const handleChange = useCallback((e) => {
+        onChange(e)
+    }, [onChange])
 
     return (
         <div className='input_container'>
             <input id='inputAutocomplite' 
                 value={query} 
                 placeholder={placeholder} 
-                onChange={ (e) => onInput(e)}   
+                onChange={handleChange}   
                 autoComplete="off"  
-                onFocus={() => onVisibleList()}
+                onFocus={onVisibleList}
             />
             <span 
                 className="clear_input" 
-                onClick={() => clearQuery()} 
+                onClick={clearQuery} 
             > &times; </span>
         </div>    
     )
 }
 
-export default Input;
+export default memo(Input);

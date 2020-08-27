@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {filter} from '../../common/utils/filter';
 import Input from '../Input/Input';
 import List from './List/List';
@@ -17,7 +17,6 @@ const Autocomplete:React.FC<IProps> = ( { items, getCurrentItemId, nameQuery, pl
 
 
     const [ query, setQuery ] = useState<string>('');
-    const [ itemsList, setItemsList ] = useState<IItem[]>([]);
     const [ isShowList, setShowList ] = useState<boolean>(false);
     const [ currentItemId, setCurrentItemId ] = useState<number|null>(null);
 
@@ -25,6 +24,7 @@ const Autocomplete:React.FC<IProps> = ( { items, getCurrentItemId, nameQuery, pl
         setQuery(nameQuery);
     }, [nameQuery]);
 
+    const newList:IItem[] = useMemo(() => filter(items, query), [items, query]);
 
     useEffect(() => {
 
@@ -47,20 +47,10 @@ const Autocomplete:React.FC<IProps> = ( { items, getCurrentItemId, nameQuery, pl
 
 
     useEffect(() => {
-        const newList:IItem[] | null = filter(items, query);
-        if(newList){
-            setItemsList(newList);
-        } else {
-            setItemsList([]);
-        }          
-    }, [query, items]);
-
-
-    useEffect(() => {
         if(!query) setShowList(false);  
     }, [query])
 
-    const onInput = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setQuery(value);
         setShowList(true);
@@ -95,13 +85,13 @@ const Autocomplete:React.FC<IProps> = ( { items, getCurrentItemId, nameQuery, pl
     return (
         <div className='form_autocomplite' id="autocomplite">
             <Input 
-                onInput={onInput} 
+                onChange={onChange} 
                 query={query}
                 clearQuery={clearQuery}
                 onVisibleList={onVisibleList}
                 placeholder={placeholder}
             />
-            {  isShowList && <List items={itemsList}  getItemInfos={getItemInfos} notFound={notFound}/>  }
+            {  isShowList && <List items={newList}  getItemInfos={getItemInfos} notFound={notFound}/>  }
 
         </div>
     )
