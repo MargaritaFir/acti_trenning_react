@@ -5,15 +5,15 @@ export interface IItem {
 
 export interface IList {
     items:IItem[] | [];
-    getItemInfos:(id:number) => void;  
+    getItemInfos?:(id:number) => void;  
     notFound:string;
 };
 
 export interface IAutocompliteProps  {
     items:IItem[] | [];
     getCurrentItemId:(id:number|null) => void;  
-    placeholder: string;
-    notFound:string;
+    placeholder?: string;
+    notFound?:string;
     nameQuery:string
 };
 
@@ -50,11 +50,11 @@ export interface IInputProps {
 
 export interface IItemsContainerProps {
     itemsList: IItem[];
-    getItemInfos:(id:number) => void;  
+    getItemInfos?:(id:number) => void;  
 }
 
 export interface IItemProps extends IItem {
-    getItemInfos:(id:number) => void;
+    getItemInfos?:(id:number) => void;
 };
 
 export interface INotFoundProps {

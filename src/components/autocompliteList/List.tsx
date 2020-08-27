@@ -17,7 +17,12 @@ const List:React.FC<IList> = ( props: IList ) => {
 
     return (
         <div className='autocomplite_list' id='autoList'>
-            {(itemsList.length)? <ItemsContainer itemsList={itemsList} getItemInfos={getItemInfos}/> : <NotFoundItem notFound={notFound} /> }
+            {(itemsList.length)? 
+            <ItemsContainer 
+                itemsList={itemsList}
+                // getItemInfos={getItemInfos}
+             /> : 
+             <NotFoundItem notFound={notFound} /> }
         </div>
     )
 }

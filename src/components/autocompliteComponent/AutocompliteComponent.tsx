@@ -3,11 +3,14 @@ import {autocomplite} from '../../common/autocompliteFunction';
 import InputComponent from '../inputComponent/InputComponent';
 import List from '../autocompliteList/List';
 import { IAutocompliteProps, IItem } from '../../common/commonInterfaces';
+import AutocompliteContext from '../../context/autocompliteContext';
+import { placeholder, notFound } from '../../common/constants';
 
 
 const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocompliteProps ) => {
 
-    const { items, getCurrentItemId, nameQuery, placeholder, notFound } = props;
+    // const { items, getCurrentItemId, nameQuery, placeholder, notFound } = props;
+       const { items, getCurrentItemId, nameQuery } = props;
 
     const [ query, setQuery ] = useState<string>('');
     const [ itemsList, setItemsList ] = useState<IItem[]>([]);
@@ -86,7 +89,8 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
     };
 
     return (
-        <div className='form_autocomplite' id="autocomplite">
+        <AutocompliteContext.Provider value={{placeholder, notFound, getItemInfos}}>
+            <div className='form_autocomplite' id="autocomplite">
             <InputComponent 
                 onInput={onInput} 
                 query={query}
@@ -97,13 +101,15 @@ const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocomplite
             {  (isShowList) ?
                                 <List 
                                     items={itemsList} 
-                                    getItemInfos={getItemInfos}
+                                    // getItemInfos={getItemInfos}
                                     notFound={notFound}
                                 /> 
                                 : null
             }
 
         </div>
+        </AutocompliteContext.Provider>
+        
     )
 }
 
