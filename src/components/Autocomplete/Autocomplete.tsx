@@ -87,9 +87,9 @@ const Autocomplete:React.FC<IProps> = ( { items, getCurrentItemId, nameQuery, pl
         <div className='form_autocomplite' id="autocomplite">
             <Input 
                 onChange={onChange} 
-                query={query}
-                clearQuery={clearQuery}
-                onVisibleList={onVisibleList}
+                value={query}
+                onClear={clearQuery}
+                onFocus={onVisibleList}
                 placeholder={placeholder}
             />
             {  isShowList && <List items={newList}  getItemInfos={getItemInfos} notFound={notFound}/>  }

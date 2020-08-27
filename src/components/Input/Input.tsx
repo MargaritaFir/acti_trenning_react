@@ -2,31 +2,29 @@ import React, {useCallback, memo} from 'react';
 import './input.scss';
 
 interface IProps {
-    query: string;  
+    value: string;  
     placeholder:string;
-    onChange:(e:any) => void;
-    clearQuery: () => void;
-    onVisibleList: () => void;
+    onChange:(e:React.ChangeEvent<HTMLInputElement>) => void;
+    onClear: () => void;
+    onFocus: () => void;
 };
 
-const Input:React.FC<IProps> = ( { query, placeholder, onChange, clearQuery, onVisibleList } ) => {
+const Input:React.FC<IProps> = ( { value, placeholder, onChange, onClear, onFocus } ) => {
 
-    const handleChange = useCallback((e) => {
-        onChange(e)
-    }, [onChange])
+    const handleChange = useCallback((e) =>  onChange(e), [onChange])
 
     return (
         <div className='input_container'>
             <input  
-                value={query} 
+                value={value} 
                 placeholder={placeholder} 
                 onChange={handleChange}   
                 autoComplete="off"  
-                onFocus={onVisibleList}
+                onFocus={onFocus}
             />
             <span 
                 className="clear_input" 
-                onClick={clearQuery} 
+                onClick={onClear} 
             > &times; </span>
         </div>    
     )
