@@ -6,7 +6,7 @@ class UsersApi {
         this.url = url
     }
     getUsers() {
-        return fetch(this.url)
+        return fetch(`${this.url}/users`)
         .then((response) => response.json())
         .then(data => {
             return data;           

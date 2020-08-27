@@ -9,7 +9,7 @@ interface IProps {
 };
 
 
-const InputField:React.FC<IProps> = ( { query, placeholder, onInput, clearQuery, onVisibleList } ) => {
+const Input:React.FC<IProps> = ( { query, placeholder, onInput, clearQuery, onVisibleList } ) => {
 
 
     return (
@@ -29,4 +29,4 @@ const InputField:React.FC<IProps> = ( { query, placeholder, onInput, clearQuery,
     )
 }
 
-export default InputField
+export default Input;

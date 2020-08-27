@@ -1,4 +1,4 @@
-import { IUserInfo } from '../common/commonInterfaces';
+import { IUserInfo } from '../interfaces';
 
 export function modifyUsersInfo( users:IUserInfo[] ){
     return users.map((user:IUserInfo) => {

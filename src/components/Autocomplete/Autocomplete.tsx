@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {autocomplite} from '../../common/autocompliteFunction';
-import InputComponent from '../inputComponent/InputComponent';
-import List from '../autocompliteList/List';
-import { IItem } from '../../common/commonInterfaces';
+import {filter} from '../../common/utils/filter';
+import Input from '../Input/Input';
+import List from './List/List';
+import { IItem } from '../../common/interfaces';
 
 
 interface IProps  {
@@ -13,7 +13,7 @@ interface IProps  {
     nameQuery:string
 };
 
-const AutocompliteComponent:React.FC<IProps> = ( { items, getCurrentItemId, nameQuery, placeholder, notFound } ) => {
+const Autocomplete:React.FC<IProps> = ( { items, getCurrentItemId, nameQuery, placeholder, notFound } ) => {
 
 
     const [ query, setQuery ] = useState<string>('');
@@ -47,7 +47,7 @@ const AutocompliteComponent:React.FC<IProps> = ( { items, getCurrentItemId, name
 
 
     useEffect(() => {
-        const newList:IItem[] | null = autocomplite(items, query);
+        const newList:IItem[] | null = filter(items, query);
         if(newList){
             setItemsList(newList);
         } else {
@@ -94,24 +94,17 @@ const AutocompliteComponent:React.FC<IProps> = ( { items, getCurrentItemId, name
 
     return (
         <div className='form_autocomplite' id="autocomplite">
-            <InputComponent 
+            <Input 
                 onInput={onInput} 
                 query={query}
                 clearQuery={clearQuery}
                 onVisibleList={onVisibleList}
                 placeholder={placeholder}
             />
-            {  (isShowList) ?
-                                <List 
-                                    items={itemsList} 
-                                    getItemInfos={getItemInfos}
-                                    notFound={notFound}
-                                /> 
-                                : null
-            }
+            {  isShowList && <List items={itemsList}  getItemInfos={getItemInfos} notFound={notFound}/>  }
 
         </div>
     )
 }
 
-export default AutocompliteComponent;
+export default Autocomplete;

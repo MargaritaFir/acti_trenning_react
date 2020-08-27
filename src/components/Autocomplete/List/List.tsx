@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Item from '../itemsContainer/Item';
+import Item from './Item/Item';
 import NotFoundItem from './NotFoundItem';
-import { IItem } from '../../common/commonInterfaces';
+import { IItem } from '../../../common/interfaces';
 
 
 interface IProps {

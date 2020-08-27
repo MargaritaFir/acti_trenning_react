@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import UsersApi from '../common/api';
+import UsersApi from '../common/UsersApi';
 import { URL, placeholder, notFound } from '../common/constants';
-import { modifyUsersInfo, getSelectedUser } from '../common/usersOperations';
-import AutocompliteComponent from '../components/autocompliteComponent/AutocompliteComponent';
-import UserInformation from '../components/userInfoComponent/UserInformation';
-import { IUserInfo } from '../common/commonInterfaces';
+import { modifyUsersInfo, getSelectedUser } from '../common/utils/usersOperations';
+import Autocomplete from '../components/Autocomplete/Autocomplete';
+import UserInformation from '../components/UserInformation/UserInformation';
+import { IUserInfo } from '../common/interfaces';
 
 
 const Container:React.FC = () => {
@@ -38,15 +38,14 @@ const Container:React.FC = () => {
 
     return (
         <div className='container'>
-            <AutocompliteComponent 
+            <Autocomplete 
                 items={modifyUsersInfo(users)} 
                 getCurrentItemId={(id) => getCurrentUserId(id)} 
                 nameQuery={nameQuery}
                 placeholder={placeholder}
                 notFound={notFound}
             />
-           { currentUser&& <UserInformation user={currentUser}/>  }
-              
+            { currentUser && <UserInformation user={currentUser}/>  }
         </div>
     )
 

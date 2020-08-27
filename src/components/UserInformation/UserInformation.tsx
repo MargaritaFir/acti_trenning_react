@@ -1,5 +1,5 @@
 import React from 'react';
-import { IUserInfo } from '../../common/commonInterfaces';
+import { IUserInfo } from '../../common/interfaces';
 
 interface IPropsUserInfo {
     user: IUserInfo;
