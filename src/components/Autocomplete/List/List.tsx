@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import Item from './Item/Item';
 import NotFoundItem from './NotFoundItem';
 import { IItem } from '../../../common/interfaces';
+import './list.scss'
 
 
 interface IProps {

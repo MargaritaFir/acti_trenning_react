@@ -3,6 +3,7 @@ import {filter} from '../../common/utils/filter';
 import Input from '../Input/Input';
 import List from './List/List';
 import { IItem } from '../../common/interfaces';
+import './autocomplete.scss';
 
 
 interface IProps  {

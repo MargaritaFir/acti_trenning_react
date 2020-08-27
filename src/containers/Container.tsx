@@ -5,6 +5,7 @@ import { modifyUsersInfo, getSelectedUser } from '../common/utils/usersOperation
 import Autocomplete from '../components/Autocomplete/Autocomplete';
 import UserInformation from '../components/UserInformation/UserInformation';
 import { IUserInfo } from '../common/interfaces';
+import './container.scss';
 
 
 const Container:React.FC = () => {

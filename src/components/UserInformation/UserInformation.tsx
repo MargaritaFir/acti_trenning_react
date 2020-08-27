@@ -1,5 +1,6 @@
 import React, {memo} from 'react';
 import { IUserInfo } from '../../common/interfaces';
+import './userInformation.scss'
 
 interface IPropsUserInfo {
     user: IUserInfo;

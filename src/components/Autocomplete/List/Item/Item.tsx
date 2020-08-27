@@ -1,4 +1,5 @@
 import React, {useCallback} from 'react';
+import './item.scss';
 
 interface IProps {
     id: number,

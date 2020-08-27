@@ -1,4 +1,5 @@
 import React, {useCallback, memo} from 'react';
+import './input.scss';
 
 interface IProps {
     query: string;  
@@ -8,7 +9,6 @@ interface IProps {
     onVisibleList: () => void;
 };
 
-
 const Input:React.FC<IProps> = ( { query, placeholder, onChange, clearQuery, onVisibleList } ) => {
 
     const handleChange = useCallback((e) => {
@@ -17,7 +17,7 @@ const Input:React.FC<IProps> = ( { query, placeholder, onChange, clearQuery, onV
 
     return (
         <div className='input_container'>
-            <input id='inputAutocomplite' 
+            <input  
                 value={query} 
                 placeholder={placeholder} 
                 onChange={handleChange}   
