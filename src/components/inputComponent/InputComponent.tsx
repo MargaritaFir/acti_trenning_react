@@ -1,11 +1,16 @@
 import React from 'react';
-import {IInputProps} from '../../common/commonInterfaces';
+
+interface IProps {
+    query: string;  
+    placeholder:string;
+    onInput:(e:any) => void;
+    clearQuery: () => void;
+    onVisibleList: () => void;
+};
 
 
+const InputField:React.FC<IProps> = ( { query, placeholder, onInput, clearQuery, onVisibleList } ) => {
 
-const InputField:React.FC<IInputProps> = ( props:IInputProps ) => {
-
-    const { query, placeholder, onInput, clearQuery, onVisibleList } = props;
 
     return (
         <div className='input_container'>

@@ -1,12 +1,16 @@
 import React from 'react';
-import { IItemProps } from '../../common/commonInterfaces'
 
+interface IProps {
+    id: number,
+    name: string,
+    getItemInfos:(id:number) => void;
+};
 
-const Item:React.FC<IItemProps>  = ( props:IItemProps ) => {
+const Item:React.FC<IProps> = ( { id, name, getItemInfos } ) => {
 
     return (
-        <div className="item" id={`item_${props.id}`} onClick={() => props.getItemInfos(props.id)}>
-            <span>{props.name}</span>
+        <div className="item" id={`item_${id}`} onClick={() => getItemInfos(id)}>
+            <span>{name}</span>
         </div>
     )
 };

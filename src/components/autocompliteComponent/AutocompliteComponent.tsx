@@ -2,12 +2,19 @@ import React, { useEffect, useState } from 'react';
 import {autocomplite} from '../../common/autocompliteFunction';
 import InputComponent from '../inputComponent/InputComponent';
 import List from '../autocompliteList/List';
-import { IAutocompliteProps, IItem } from '../../common/commonInterfaces';
+import { IItem } from '../../common/commonInterfaces';
 
 
-const AutocompliteComponent:React.FC<IAutocompliteProps> = ( props:IAutocompliteProps ) => {
+interface IProps  {
+    items:IItem[];
+    getCurrentItemId:(id:number|null) => void;  
+    placeholder: string;
+    notFound:string;
+    nameQuery:string
+};
 
-    const { items, getCurrentItemId, nameQuery, placeholder, notFound } = props;
+const AutocompliteComponent:React.FC<IProps> = ( { items, getCurrentItemId, nameQuery, placeholder, notFound } ) => {
+
 
     const [ query, setQuery ] = useState<string>('');
     const [ itemsList, setItemsList ] = useState<IItem[]>([]);

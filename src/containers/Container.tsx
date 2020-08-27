@@ -45,7 +45,8 @@ const Container:React.FC = () => {
                 placeholder={placeholder}
                 notFound={notFound}
             />
-            <UserInformation user={currentUser}/>      
+           { currentUser&& <UserInformation user={currentUser}/>  }
+              
         </div>
     )
 
