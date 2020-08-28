@@ -4,6 +4,7 @@ import Input from '../Input/Input';
 import List from './List/List';
 import { IItem } from '../../common/interfaces';
 import './autocomplete.scss';
+import {useOnClickOutside} from '../../hooks/useOnClickOutside';
 
 
 interface IProps  {
@@ -20,27 +21,11 @@ const Autocomplete:React.FC<IProps> = ( { items, onSelect, selectItem, placehold
     const [ value, setValue ] = useState<string>('');
     const [ isShowList, setShowList ] = useState<boolean>(false);
     const listItems = useMemo(() => filter(items, value), [items, value]);
-    // const inputRef = useRef<HTMLInputElement>(null);
+    const autocompleteRef = useRef<HTMLDivElement>(null);
 
 
-    useEffect(() => {
 
-        const onHiddenList = (e:any) => {
-            const list = document.getElementById('autoList');
-            const id = e.target.id;
-            const isItemClass:boolean = e.target.classList.contains('item');
-            const isClose:boolean = (id === 'autoList' || id === 'inputAutocomplite' || isItemClass) ? false : true;
-
-            if(list && isClose){
-                setShowList(false);
-            } 
-        }
-
-        document.addEventListener('click', onHiddenList)
-
-        return () => document.removeEventListener('click', onHiddenList );
-
-    }, []);
+    useOnClickOutside( autocompleteRef, () => setShowList(false))
 
 
     useEffect(() => {
@@ -79,14 +64,13 @@ const Autocomplete:React.FC<IProps> = ( { items, onSelect, selectItem, placehold
     }
 
     return (
-        <div className='form_autocomplite' id="autocomplite" >
+        <div className='form_autocomplite' ref={autocompleteRef} >
             <Input 
                 onChange={handleChange} 
                 value={value}
                 onClear={onClearValue}
                 onFocus={onShowList}
                 placeholder={placeholder}
-                // inputRef={inputRef}
             />
             {  isShowList && <List items={listItems}  onSelect={onSelectItem} notFound={notFound}/>  }
 

@@ -8,7 +8,6 @@ interface IProps {
     onChange:(e:React.ChangeEvent<HTMLInputElement>) => void;
     onClear: () => void;
     onFocus: () => void;
-    // inputRef:any;
 };
 
 const Input:React.FC<IProps> = ( { value, placeholder, onChange, onClear, onFocus } ) => {
@@ -19,7 +18,6 @@ const Input:React.FC<IProps> = ( { value, placeholder, onChange, onClear, onFocu
     return (
         <div className='input_container'>
             <input 
-                // ref={inputRef}
                 value={value} 
                 placeholder={placeholder} 
                 onChange={handleChange}   
