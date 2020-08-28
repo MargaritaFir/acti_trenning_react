@@ -9,7 +9,7 @@ interface IProps {
 
 const Item:React.FC<IProps> = ( { id, name, onSelect } ) => {
 
-    const handleClick = useCallback(() => onSelect(id), [id, onSelect])
+    const handleClick = useCallback(() => onSelect(id), [id, onSelect]);
 
     return (
         <div className="item" id={`item_${id}`} onClick={handleClick}>

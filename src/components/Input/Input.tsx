@@ -1,7 +1,6 @@
 import React, {useCallback, memo} from 'react';
 import './input.scss';
 
-
 interface IProps {
     value: string;  
     placeholder:string;
@@ -11,9 +10,8 @@ interface IProps {
 };
 
 const Input:React.FC<IProps> = ( { value, placeholder, onChange, onClear, onFocus } ) => {
-
-    const handleChange = useCallback((e) =>  onChange(e), [onChange]);
     
+    const handleChange = useCallback((e) => onChange(e), [onChange]);   
 
     return (
         <div className='input_container'>
@@ -24,10 +22,7 @@ const Input:React.FC<IProps> = ( { value, placeholder, onChange, onClear, onFocu
                 autoComplete="off"  
                 onFocus={onFocus}
             />
-            <span 
-                className="clear_input" 
-                onClick={onClear} 
-            > &times; </span>
+            <span className="clear_input" onClick={onClear} > &times;</span>
         </div>    
     )
 }

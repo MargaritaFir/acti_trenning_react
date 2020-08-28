@@ -1,9 +1,9 @@
 import React from 'react';
 
 interface IProps {
-    notFound: string;
+    notFoundElement: string;
 }
 
-const NotFoundItem:React.FC<IProps> = ( { notFound } ) => <div className="item not_found"> <span>{notFound}</span></div>;
+const NotFoundItem:React.FC<IProps> = ( { notFoundElement } ) => <div className="item not_found"> <span>{notFoundElement}</span></div>;
 
 export default NotFoundItem;

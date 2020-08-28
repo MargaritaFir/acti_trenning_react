@@ -1,37 +1,36 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react';
-import {filter} from '../../common/utils/filter';
+import React, { useEffect, useState, useMemo, useRef, memo } from 'react';
+import {filterName} from '../../common/utils/filters';
 import Input from '../Input/Input';
 import List from './List/List';
 import { IItem } from '../../common/interfaces';
-import './autocomplete.scss';
 import {useOnClickOutside} from '../../hooks/useOnClickOutside';
-
+import './autocomplete.scss';
 
 interface IProps  {
     items:IItem[];  
     placeholder: string;
-    notFound:string;
+    notFoundElement:string;
     selectItem:IItem | null;
     onSelect: (id:number) => void;
     onClear:() => void;
 };
 
-const Autocomplete:React.FC<IProps> = ( { items, onSelect, selectItem, placeholder, notFound, onClear } ) => {
+const Autocomplete:React.FC<IProps> = ( { items, onSelect, selectItem, placeholder, notFoundElement, onClear } ) => {
 
     const [ value, setValue ] = useState<string>('');
     const [ isShowList, setShowList ] = useState<boolean>(false);
-    const listItems = useMemo(() => filter(items, value), [items, value]);
     const autocompleteRef = useRef<HTMLDivElement>(null);
-
-
-
-    useOnClickOutside( autocompleteRef, () => setShowList(false))
+    const listItems = useMemo(() => filterName(items, value), [items, value]);
+    useOnClickOutside( autocompleteRef, () => setShowList(false));
 
 
     useEffect(() => {
+        //Мне нужен selectItem.name из пропса, для стейта value, когда выбран пользователь, чтобы отображать в input полное имя юзера
+        //Можно так записывать пропсы в стейт?
+        // Мне просто кажется, что глобально в компоненте не нужно хранить value для данного компонента, оно индивидуально только для него,
+        // поэтому я не знаю, как сделать по другому обновление этого value при изменении пользователя.
         if(selectItem) setValue(selectItem.name);
     }, [selectItem])
-
 
     useEffect(() => {
         if(!value) setShowList(false);  
@@ -43,20 +42,19 @@ const Autocomplete:React.FC<IProps> = ( { items, onSelect, selectItem, placehold
         setShowList(true);
     };
 
-
-    const onClearValue = () => {
+    const handleClearValue = () => {
         setValue('');
-        onClear()
+        onClear();
     };
-
 
     const onShowList = () => {
         if(value) setShowList(true);
     };
 
-    const onSelectItem = (id:number) => {
+    const handleSelectItem = (id:number) => {
         if(selectItem && selectItem.id === id){
-            setValue(selectItem.name)
+            // здесь я тоже беру значение из стейта, если повторно выбран тот же юзер в List
+            setValue(selectItem.name);
         } else {
             onSelect(id);
         }     
@@ -68,14 +66,13 @@ const Autocomplete:React.FC<IProps> = ( { items, onSelect, selectItem, placehold
             <Input 
                 onChange={handleChange} 
                 value={value}
-                onClear={onClearValue}
+                onClear={handleClearValue}
                 onFocus={onShowList}
                 placeholder={placeholder}
             />
-            {  isShowList && <List items={listItems}  onSelect={onSelectItem} notFound={notFound}/>  }
-
+            {  isShowList && <List items={listItems}  onSelect={handleSelectItem} notFoundElement={notFoundElement}/>  }
         </div>
     )
 }
 
-export default Autocomplete;
+export default memo(Autocomplete);
