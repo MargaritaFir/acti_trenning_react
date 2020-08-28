@@ -1,21 +1,25 @@
 import React, {useCallback, memo} from 'react';
 import './input.scss';
 
+
 interface IProps {
     value: string;  
     placeholder:string;
     onChange:(e:React.ChangeEvent<HTMLInputElement>) => void;
     onClear: () => void;
     onFocus: () => void;
+    // inputRef:any;
 };
 
 const Input:React.FC<IProps> = ( { value, placeholder, onChange, onClear, onFocus } ) => {
 
-    const handleChange = useCallback((e) =>  onChange(e), [onChange])
+    const handleChange = useCallback((e) =>  onChange(e), [onChange]);
+    
 
     return (
         <div className='input_container'>
-            <input  
+            <input 
+                // ref={inputRef}
                 value={value} 
                 placeholder={placeholder} 
                 onChange={handleChange}   

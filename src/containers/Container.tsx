@@ -1,22 +1,20 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import UsersApi from '../common/UsersApi';
 import { URL, placeholder, notFound } from '../common/constants';
-import { modifyUsersInfo, getSelectedUser } from '../common/utils/usersOperations';
 import Autocomplete from '../components/Autocomplete/Autocomplete';
 import UserInformation from '../components/UserInformation/UserInformation';
 import { IUserInfo } from '../common/interfaces';
 import './container.scss';
 
+const api = new UsersApi(URL);
 
 const Container:React.FC = () => {
 
     const [ users, setUsers ] = useState<IUserInfo[]>([]);
-    const [ currentUser, setCurrentUser ] = useState<IUserInfo | null>(null);
-    const [ nameQuery, setQuery ] = useState<string>('');
+    const [ selectUser, setSelectedUser ] = useState<IUserInfo|null>(null);
 
     useEffect(() => {
-        const fetchData = async() => {
-            const api = new UsersApi(URL);
+        const fetchData = async() => {        
             const usersFetch = await api.getUsers();
             setUsers(usersFetch);  
         }
@@ -25,28 +23,26 @@ const Container:React.FC = () => {
 
     }, []);
 
+    const handleSelectUser = (id: number) => {
+        const selected:any = users.find(user => id === user.id);
+        setSelectedUser(selected)
+    }
 
-    const getCurrentUserId =(id:number|null) => {
-        const currentUserNext = getSelectedUser(users, id);
-        setCurrentUser(currentUserNext);
-
-        if(currentUserNext) {
-            setQuery(currentUserNext.name);
-        } else {
-            setQuery(''); 
-        }      
+    const handleClear = () => {
+        setSelectedUser(null); 
     }
 
     return (
         <div className='container'>
             <Autocomplete 
-                items={modifyUsersInfo(users)} 
-                getCurrentItemId={(id) => getCurrentUserId(id)} 
-                nameQuery={nameQuery}
+                items={users} 
                 placeholder={placeholder}
                 notFound={notFound}
+                onSelect={handleSelectUser}
+                selectItem={selectUser}
+                onClear={handleClear}
             />
-            { currentUser && <UserInformation user={currentUser}/>  }
+            { selectUser && <UserInformation user={selectUser}/> }
         </div>
     )
 

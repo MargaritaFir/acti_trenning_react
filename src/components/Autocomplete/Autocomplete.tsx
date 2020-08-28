@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import {filter} from '../../common/utils/filter';
 import Input from '../Input/Input';
 import List from './List/List';
@@ -7,25 +7,21 @@ import './autocomplete.scss';
 
 
 interface IProps  {
-    items:IItem[];
-    getCurrentItemId:(id:number|null) => void;  
+    items:IItem[];  
     placeholder: string;
     notFound:string;
-    nameQuery:string
+    selectItem:IItem | null;
+    onSelect: (id:number) => void;
+    onClear:() => void;
 };
 
-const Autocomplete:React.FC<IProps> = ( { items, getCurrentItemId, nameQuery, placeholder, notFound } ) => {
+const Autocomplete:React.FC<IProps> = ( { items, onSelect, selectItem, placeholder, notFound, onClear } ) => {
 
-
-    const [ query, setQuery ] = useState<string>('');
+    const [ value, setValue ] = useState<string>('');
     const [ isShowList, setShowList ] = useState<boolean>(false);
-    const [ currentItemId, setCurrentItemId ] = useState<number|null>(null);
+    const listItems = useMemo(() => filter(items, value), [items, value]);
+    // const inputRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        setQuery(nameQuery);
-    }, [nameQuery]);
-
-    const newList:IItem[] = useMemo(() => filter(items, query), [items, query]);
 
     useEffect(() => {
 
@@ -48,51 +44,51 @@ const Autocomplete:React.FC<IProps> = ( { items, getCurrentItemId, nameQuery, pl
 
 
     useEffect(() => {
-        if(!query) setShowList(false);  
-    }, [query])
+        if(selectItem) setValue(selectItem.name);
+    }, [selectItem])
 
-    const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+
+    useEffect(() => {
+        if(!value) setShowList(false);  
+    }, [value])
+
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        setQuery(value);
+        setValue(value);
         setShowList(true);
-        if(!value){
-            getCurrentItemId(null);
-        }
     };
 
-    const getItemInfos = (id:number) =>{
 
-        if(id === currentItemId ) {
-            setQuery(nameQuery);
-            setShowList(false);
-            return;
-        }
-        setCurrentItemId(id);
-        getCurrentItemId(id);
+    const onClearValue = () => {
+        setValue('');
+        onClear()
+    };
+
+
+    const onShowList = () => {
+        if(value) setShowList(true);
+    };
+
+    const onSelectItem = (id:number) => {
+        if(selectItem && selectItem.id === id){
+            setValue(selectItem.name)
+        } else {
+            onSelect(id);
+        }     
         setShowList(false);
-    };
-
-
-    const clearQuery = () => {
-        setQuery('');
-        getCurrentItemId(null);
-    };
-
-
-    const onVisibleList = () => {
-        if(query) setShowList(true);
-    };
+    }
 
     return (
-        <div className='form_autocomplite' id="autocomplite">
+        <div className='form_autocomplite' id="autocomplite" >
             <Input 
-                onChange={onChange} 
-                value={query}
-                onClear={clearQuery}
-                onFocus={onVisibleList}
+                onChange={handleChange} 
+                value={value}
+                onClear={onClearValue}
+                onFocus={onShowList}
                 placeholder={placeholder}
+                // inputRef={inputRef}
             />
-            {  isShowList && <List items={newList}  getItemInfos={getItemInfos} notFound={notFound}/>  }
+            {  isShowList && <List items={listItems}  onSelect={onSelectItem} notFound={notFound}/>  }
 
         </div>
     )

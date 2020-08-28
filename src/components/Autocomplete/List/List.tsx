@@ -7,17 +7,16 @@ import './list.scss'
 
 interface IProps {
     items:IItem[];
-    getItemInfos:(id:number) => void;  
+    onSelect:(id:number) => void;  
     notFound:string;
 };
 
 
-const List:React.FC<IProps> = ( { items, getItemInfos, notFound } ) => {
+const List:React.FC<IProps> = ( { items, onSelect, notFound } ) => {
 
     return (
         <div className='autocomplite_list' id='autoList'>
-
-            {(items.length)?  items.map((item:IItem) => <Item key={item.id} {...item} getItemInfos={getItemInfos}/>) : <NotFoundItem notFound={notFound} /> }
+            {(items.length)?  items.map((item:IItem) => <Item key={item.id} {...item} onSelect={onSelect}/>) : <NotFoundItem notFound={notFound} /> }
         </div>
     )
 }
