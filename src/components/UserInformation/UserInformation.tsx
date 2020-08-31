@@ -25,7 +25,6 @@ const UserInformation:React.FC<IPropsUserInfo> = ( { user } ) => {
         </div>
     )
 
-   
 }
 
 export default memo(UserInformation);

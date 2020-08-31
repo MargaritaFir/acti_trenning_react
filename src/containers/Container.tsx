@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import UsersApi from '../common/UsersApi';
 import { URL, placeholder, notFoundElement } from '../common/constants';
 import Autocomplete from '../components/Autocomplete/Autocomplete';
@@ -22,15 +22,15 @@ const Container:React.FC = () => {
 
     }, []);
 
-    const handleSelectUser = (id: number) => {
+    const handleSelectUser = useCallback((id: number) => {
         //Здесь не понимаю, как типизировать selected
         const selected:any = users.find((user:IUserInfo) => id === user.id);
         setSelectedUser(selected);
-    }
+    }, [users])
 
-    const removeSelectedUser = () => {
+    const removeSelectedUser = useCallback(() => {
         setSelectedUser(null); 
-    }
+    }, [])
 
     return (
         <div className='container'>
@@ -39,7 +39,7 @@ const Container:React.FC = () => {
                 placeholder={placeholder}
                 notFoundElement={notFoundElement}
                 onSelect={handleSelectUser}
-                selectItem={selectedUser}
+                selectedItem={selectedUser}
                 onClear={removeSelectedUser}
             />
             { selectedUser && <UserInformation user={selectedUser}/> }

@@ -3,7 +3,7 @@ export interface IItem {
     name: string,
 };
 
-export interface IUserAddres {
+export interface IUserAddress {
     street: string,
     suite: string,
     city: string 
@@ -20,7 +20,7 @@ export interface IUserInfo {
     name: string,
     username: string,
     email: string,
-    address: IUserAddres,
+    address: IUserAddress,
     phone: string,
     website: string,
     company: ICompany

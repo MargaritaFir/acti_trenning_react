@@ -10,12 +10,12 @@ interface IProps  {
     items:IItem[];  
     placeholder: string;
     notFoundElement:string;
-    selectItem:IItem | null;
+    selectedItem:IItem | null;
     onSelect: (id:number) => void;
     onClear:() => void;
 };
 
-const Autocomplete:React.FC<IProps> = ( { items, onSelect, selectItem, placeholder, notFoundElement, onClear } ) => {
+const Autocomplete:React.FC<IProps> = ( { items, onSelect, selectedItem, placeholder, notFoundElement, onClear } ) => {
 
     const [ value, setValue ] = useState<string>('');
     const [ isShowList, setShowList ] = useState<boolean>(false);
@@ -29,8 +29,8 @@ const Autocomplete:React.FC<IProps> = ( { items, onSelect, selectItem, placehold
         //Можно так записывать пропсы в стейт?
         // Мне просто кажется, что глобально в компоненте не нужно хранить value для данного компонента, оно индивидуально только для него,
         // поэтому я не знаю, как сделать по другому обновление этого value при изменении пользователя.
-        if(selectItem) setValue(selectItem.name);
-    }, [selectItem])
+        if(selectedItem) setValue(selectedItem.name);
+    }, [selectedItem])
 
     useEffect(() => {
         if(!value) setShowList(false);  
@@ -52,9 +52,9 @@ const Autocomplete:React.FC<IProps> = ( { items, onSelect, selectItem, placehold
     };
 
     const handleSelectItem = (id:number) => {
-        if(selectItem && selectItem.id === id){
+        if(selectedItem && selectedItem.id === id){
             // здесь я тоже беру значение из стейта, если повторно выбран тот же юзер в List
-            setValue(selectItem.name);
+            setValue(selectedItem.name);
         } else {
             onSelect(id);
         }     
