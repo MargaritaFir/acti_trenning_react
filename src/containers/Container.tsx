@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import UsersApi from '../common/api';
-import { URL, placeholder, notFound } from '../common/constants';
-import { modifyUsersInfo, getSelectedUser } from '../common/usersOperations';
-import AutocompliteComponent from '../components/autocompliteComponent/AutocompliteComponent';
-import UserInformation from '../components/userInfoComponent/UserInformation';
-import { IUserInfo } from '../common/commonInterfaces';
-
+import React, { useEffect, useState, useCallback } from 'react';
+import UsersApi from '../common/UsersApi';
+import { URL, placeholder, notFoundElement } from '../common/constants';
+import Autocomplete from '../components/Autocomplete/Autocomplete';
+import UserInformation from '../components/UserInformation/UserInformation';
+import { IUserInfo } from '../common/interfaces';
+import './container.scss';
+const usersApi = new UsersApi(URL);
 
 const Container:React.FC = () => {
 
     const [ users, setUsers ] = useState<IUserInfo[]>([]);
-    const [ currentUser, setCurrentUser ] = useState<IUserInfo | null>(null);
-    const [ nameQuery, setQuery ] = useState<string>('');
+    const [ selectedUser, setSelectedUser ] = useState<IUserInfo|null>(null);
 
     useEffect(() => {
-        const fetchData = async() => {
-            const api = new UsersApi(URL);
-            const usersFetch = await api.getUsers();
+        const fetchData = async() => {        
+            const usersFetch = await usersApi.getUsers();
             setUsers(usersFetch);  
         }
 
@@ -24,31 +22,29 @@ const Container:React.FC = () => {
 
     }, []);
 
+    const handleSelectUser = useCallback((id: number) => {
+        //Здесь не понимаю, как типизировать selected
+        const selected:any = users.find((user:IUserInfo) => id === user.id);
+        setSelectedUser(selected);
+    }, [users])
 
-    const getCurrentUserId =(id:number|null) => {
-        const currentUserNext = getSelectedUser(users, id);
-        setCurrentUser(currentUserNext);
-
-        if(currentUserNext) {
-            setQuery(currentUserNext.name);
-        } else {
-            setQuery(''); 
-        }      
-    }
+    const removeSelectedUser = useCallback(() => {
+        setSelectedUser(null); 
+    }, [])
 
     return (
         <div className='container'>
-            <AutocompliteComponent 
-                items={modifyUsersInfo(users)} 
-                getCurrentItemId={(id) => getCurrentUserId(id)} 
-                nameQuery={nameQuery}
+            <Autocomplete 
+                items={users} 
                 placeholder={placeholder}
-                notFound={notFound}
+                notFoundElement={notFoundElement}
+                onSelect={handleSelectUser}
+                selectedItem={selectedUser}
+                onClear={removeSelectedUser}
             />
-            <UserInformation user={currentUser}/>      
+            { selectedUser && <UserInformation user={selectedUser}/> }
         </div>
     )
-
 }
 
 export default Container;
